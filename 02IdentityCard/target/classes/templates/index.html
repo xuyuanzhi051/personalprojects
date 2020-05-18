@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>身份证识别</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 mx-auto">
+                <h1>身份证识别</h1>
+                <div class="col-sm-12">
+                    <p th:text="${messages}" th:if="${messages != null}" class="alert alert-info"></p>
+                </div>
+                <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input id="location" class="form-control" onclick="$('#i-face').click();">
+                                <label class="input-group-btn">
+                                    <input type="button" id="i-check" value="上传人像面" class="btn btn-primary" onclick="$('#i-face').click();">
+                                </label>
+                            </div>
+                        </div>
+                        <input type="file" name="face" id="i-face" accept=".jpg, .png, .jpeg" onchange="$('#location').val($('#i-face').val());" style="display: none">
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input id="locationf" class="form-control" onclick="$('#i-back').click();">
+                                <label class="input-group-btn">
+                                    <input type="button" id="i-checkb" value="上传国徽面" class="btn btn-primary" onclick="$('#i-back').click();">
+                                </label>
+                            </div>
+                        </div>
+                        <input type="file" name="back" id="i-back" accept=".jpg, .png, .jpeg" onchange="$('#locationf').val($('#i-back').val());" style="display: none">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary form-control">开始识别</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 38px;">
+            <div class="col-md-12 mx-auto">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img th:src="${faceImage}" th:if="faceImage != null" class="img-fluid">
+                    </div>
+                    <div class="col-sm-4">
+                        <img th:src="${backImage}" th:if="backImage != null" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 38px;">
+            <div class="col-md-12 mx-auto" th:if="${faceResult != null}">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p><span>姓名: </span><span th:text="${faceResult.name}"></span></p>
+                        <p><span>性别: </span><span th:text="${faceResult.gender}"></span></p>
+                        <p><span>民族: </span><span th:text="${faceResult.nationality}"></span></p>
+                        <p><span>出生日期: </span><span th:text="${faceResult.birthDate}"></span></p>
+                        <p><span>住址: </span><span th:text="${faceResult.address}"></span></p>
+                        <p><span>身份证号: </span><span th:text="${faceResult.IDNumber}"></span></p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p><span>签发机关: </span><span th:text="${backResult.issue}"></span></p>
+                        <p><span>有效日期: </span><span th:text="${backResult.startDate}">-<span th:text="${faceResult.endDate}"></span></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>
