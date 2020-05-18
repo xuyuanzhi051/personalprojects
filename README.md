@@ -1,2 +1,2 @@
 # T1LoginandRegist
-jsp+servlet+xml简单实现用户注册登录功能
+这个仓库会记录自己的一些小项目
